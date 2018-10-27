@@ -9,6 +9,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/commons-beanutils-1.9.3" />
+            <option value="$PROJECT_DIR$/commons-collections-3.2.2" />
+            <option value="$PROJECT_DIR$/commons-lang3-3.6" />
+            <option value="$PROJECT_DIR$/commons-logging-1.2" />
+            <option value="$PROJECT_DIR$/commons-text-1.1" />
+            <option value="$PROJECT_DIR$/opencsv-4.0" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
