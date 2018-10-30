@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.MonthDisplayHelper;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -21,7 +22,11 @@ import java.util.List;
 
 import static java.security.AccessController.getContext;
 
-public class SearchResults extends AppCompatActivity {
+
+public class SearchResults extends AppCompatActivity implements View.OnClickListener {
+
+  ArrayList<String[]> global_results = new ArrayList<String[]>();
+  public static final String key = "com.example.shayladd.spartan_grades";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class SearchResults extends AppCompatActivity {
       table.addView(output, output_params);
     }
 
+    global_results = results;
     //display data in TableLayout
 /*
     String to_print = "";
@@ -81,7 +87,7 @@ public class SearchResults extends AppCompatActivity {
       TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
       table.addView(output, output_params);
     } else {
-      for (int i = 1; i < results.size(); i++) {
+      for (int i = 0; i < results.size(); i++) {
         String[] temp = results.get(i);
 
         TableRow table_row = new TableRow(this);
@@ -118,6 +124,8 @@ public class SearchResults extends AppCompatActivity {
         table_row.addView(avg_gpa, avg_gpa_params);
 
         Button btn = new Button(this);
+        btn.setId(i);
+        btn.setOnClickListener(this);
         btn.setText("...");
         TableRow.LayoutParams btn_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
         table_row.addView(btn);
@@ -199,5 +207,15 @@ public class SearchResults extends AppCompatActivity {
       }
     }
     return result;
+  }
+
+  @Override
+  public void onClick(View v) {
+    Button btn = (Button)v;
+    int index = btn.getId();
+    Intent intent = new Intent(SearchResults.this, ClassInfo.class);
+    String[] class_info = global_results.get(index);
+    intent.putExtra(key, class_info);
+    startActivity(intent);
   }
 }
