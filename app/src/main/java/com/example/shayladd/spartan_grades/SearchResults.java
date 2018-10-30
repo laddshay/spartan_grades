@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.MonthDisplayHelper;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -26,10 +27,11 @@ public class SearchResults extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search_results);
+    setTitle("Spartan Grades");
 
     ArrayList<String[]> master = new ArrayList<String[]>();
     ArrayList<String[]> results = new ArrayList<String[]>();
-    TextView output = (TextView) findViewById(R.id.output);
+    //TextView output = (TextView) findViewById(R.id.output);
     TableLayout table = (TableLayout) findViewById(R.id.table);
 
     //get search type and search term from search page call
@@ -37,7 +39,7 @@ public class SearchResults extends AppCompatActivity {
     String[] messages = intent.getStringArrayExtra(MainActivity.key);
     String search_by = messages[0];
     String search_term = messages[1];
-    output.setText(search_by + ": "  + search_term);
+    //output.setText(search_by + ": "  + search_term);
 
     //import data from master CSV (located under app/res/raw/data.csv)
 
@@ -52,7 +54,11 @@ public class SearchResults extends AppCompatActivity {
     } else if (search_by.equals("Professor")) {
       results = searchProf(search_term, master);
     } else {
-      output.setText("error");
+      TextView output = new TextView(this);
+      output.setText("Error.");
+      TableRow table_row = new TableRow(this);
+      TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      table.addView(output, output_params);
     }
 
     //display data in TableLayout
@@ -68,36 +74,56 @@ public class SearchResults extends AppCompatActivity {
     }
     output.setText(to_print);
     */
-    for(int i = 1; i < results.size(); i++) {
-      String[] temp = results.get(i);
-
+    if (results.size() < 1) {
+      TextView output = new TextView(this);
+      output.setText("No matching classes found.");
       TableRow table_row = new TableRow(this);
+      TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      table.addView(output, output_params);
+    } else {
+      for (int i = 1; i < results.size(); i++) {
+        String[] temp = results.get(i);
 
-      TextView subject_code = new TextView(this);
-      subject_code.setText(temp[1] + " " + temp[2] + " ");
-      subject_code.setWidth(0);
-      TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-      subject_code_params.rightMargin = 10;
-      table_row.addView(subject_code, subject_code_params);
+        TableRow table_row = new TableRow(this);
 
-      TextView course_title = new TextView(this);
-      course_title.setText(temp[3]);
-      TableRow.LayoutParams course_title_params = new TableRow.LayoutParams((int) ((3 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-      course_title_params.rightMargin = 10;
-      table_row.addView(course_title, course_title_params);
+        TextView semester = new TextView(this);
+        semester.setText(temp[0]);
+        semester.setWidth(0);
+        TableRow.LayoutParams semester_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+        semester_params.rightMargin = 10;
+        table_row.addView(semester, semester_params);
 
-      TextView professor = new TextView(this);
-      professor.setText(temp[4]);
-      TableRow.LayoutParams professor_params = new TableRow.LayoutParams((int) ((3 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-      professor_params.rightMargin = 10;
-      table_row.addView(professor, professor_params);
+        TextView subject_code = new TextView(this);
+        subject_code.setText(temp[1] + " " + temp[2] + " ");
+        subject_code.setWidth(0);
+        TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+        subject_code_params.rightMargin = 10;
+        table_row.addView(subject_code, subject_code_params);
 
-      TextView avg_gpa = new TextView(this);
-      avg_gpa.setText(temp[5]);
-      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-      table_row.addView(avg_gpa, avg_gpa_params);
+        TextView course_title = new TextView(this);
+        course_title.setText(temp[3]);
+        TableRow.LayoutParams course_title_params = new TableRow.LayoutParams((int) ((3 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+        course_title_params.rightMargin = 10;
+        table_row.addView(course_title, course_title_params);
 
-      table.addView(table_row);
+        TextView professor = new TextView(this);
+        professor.setText(temp[4]);
+        TableRow.LayoutParams professor_params = new TableRow.LayoutParams((int) ((2 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+        professor_params.rightMargin = 10;
+        table_row.addView(professor, professor_params);
+
+        TextView avg_gpa = new TextView(this);
+        avg_gpa.setText(temp[5]);
+        TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+        table_row.addView(avg_gpa, avg_gpa_params);
+
+        Button btn = new Button(this);
+        btn.setText("...");
+        TableRow.LayoutParams btn_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+        table_row.addView(btn);
+
+        table.addView(table_row, btn_params);
+      }
     }
   }
 
@@ -109,8 +135,14 @@ public class SearchResults extends AppCompatActivity {
       ArrayList<String[]> result = (ArrayList<String[]>)(result_arr);
       return result;
     } catch(Exception e) {
-      TextView output = (TextView) findViewById(R.id.output);
-      output.setText(e.getMessage());
+      TableLayout table = (TableLayout) findViewById(R.id.table);
+
+      TextView output = new TextView(this);
+      output.setText("Error: read data failed.");
+      TableRow table_row = new TableRow(this);
+      TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      table.addView(output, output_params);
+
       return new ArrayList<String[]>();
     }
   }
