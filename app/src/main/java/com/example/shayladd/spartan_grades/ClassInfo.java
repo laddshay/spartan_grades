@@ -16,6 +16,7 @@ public class ClassInfo extends AppCompatActivity {
     TextView course_title = (TextView)findViewById(R.id.course_title);
     TextView professor = (TextView)findViewById(R.id.professor);
     TextView semester = (TextView)findViewById(R.id.semester);
+    TextView averageGPA = (TextView)findViewById(R.id.avgGPA);
 
     Intent intent = getIntent();
     String[] messages = intent.getStringArrayExtra(SearchResults.key);
@@ -26,6 +27,7 @@ public class ClassInfo extends AppCompatActivity {
     professor.setText("Professor(s): " + professor_str);
     String semester_str = getSemester(messages[0]);
     semester.setText("Semester: " + semester_str);
+    averageGPA.setText("GPA: " + messages[5]); //Added GPA
   }
 
   private String getSemester(String str) {
