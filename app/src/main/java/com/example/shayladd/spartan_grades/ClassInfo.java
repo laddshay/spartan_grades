@@ -27,7 +27,7 @@ public class ClassInfo extends AppCompatActivity {
     professor.setText("Professor(s): " + professor_str);
     String semester_str = getSemester(messages[0]);
     semester.setText("Semester: " + semester_str);
-    averageGPA.setText("GPA: " + messages[5]); //Added GPA
+    averageGPA.setText("Average GPA: " + messages[5]); //Added GPA
   }
 
   private String getSemester(String str) {
