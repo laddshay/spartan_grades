@@ -89,6 +89,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     } else {
       //add header entries
       String[] temp_header = master.get(0);
+      ((ComparisonArray)SearchResults.this.getApplication()).insertComparisonArray(temp_header);
 
       TableRow table_row_header = new TableRow(this);
 

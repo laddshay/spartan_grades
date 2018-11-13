@@ -3,6 +3,7 @@
     package="com.example.shayladd.spartan_grades">
 
     <application
+        android:name=".ComparisonArray"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchResults"></activity>
-        <activity android:name=".ClassInfo"></activity>
+        <activity android:name=".SearchResults" />
+        <activity android:name=".ClassInfo" />
+        <activity android:name=".ViewComparison"></activity>
     </application>
 
 </manifest>

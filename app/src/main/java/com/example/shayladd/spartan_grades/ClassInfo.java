@@ -1,8 +1,12 @@
 package com.example.shayladd.spartan_grades;
 
+import android.app.Application;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ClassInfo extends AppCompatActivity {
@@ -19,7 +23,7 @@ public class ClassInfo extends AppCompatActivity {
     TextView averageGPA = (TextView)findViewById(R.id.avgGPA);
 
     Intent intent = getIntent();
-    String[] messages = intent.getStringArrayExtra(SearchResults.key);
+    final String[] messages = intent.getStringArrayExtra(SearchResults.key);
 
     course_code.setText("Course Code: "+ messages[1] + " " + messages[2]);
     course_title.setText("Course Title: " + messages[3]);
@@ -28,6 +32,24 @@ public class ClassInfo extends AppCompatActivity {
     String semester_str = getSemester(messages[0]);
     semester.setText("Semester: " + semester_str);
     averageGPA.setText("Average GPA: " + messages[5]); //Added GPA
+
+
+    Button compare_button = (Button) findViewById(R.id.compare_button);
+    compare_button.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ((ComparisonArray)ClassInfo.this.getApplication()).insertComparisonArray(messages);
+      }
+    });
+
+    Button view_button = (Button) findViewById(R.id.view_button);
+    view_button.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(ClassInfo.this, ViewComparison.class);
+        startActivity(intent);
+      }
+    });
   }
 
   private String getSemester(String str) {
@@ -68,4 +90,6 @@ public class ClassInfo extends AppCompatActivity {
 
     return result;
   }
+  
+  
 }
