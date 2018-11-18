@@ -1,7 +1,9 @@
 package com.example.shayladd.spartan_grades;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -15,6 +17,7 @@ public class ViewComparison extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_comparison);
+    setTitle("Spartan Grades");
 
     ArrayList<String[]> comparison_table = ((ComparisonArray)ViewComparison.this.getApplication()).getComparisonArray();
     TableLayout table = (TableLayout) findViewById(R.id.table);
@@ -63,7 +66,7 @@ public class ViewComparison extends AppCompatActivity {
       table_row_header.addView(avg_gpa_header, avg_gpa_params);
 
       TextView btn_header = new TextView(this);
-      btn_header.setText("More Info...");
+      btn_header.setText("Remove");
       TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.1);
       table_row_header.addView(btn_header, btn_params);
 
@@ -105,7 +108,18 @@ public class ViewComparison extends AppCompatActivity {
         //TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
         table_row.addView(avg_gpa, avg_gpa_params);
 
+        Button btn = new Button(this);
+        btn.setId(i);
+        btn.setOnClickListener(new Button.OnClickListener(){
+          public void onClick(View v) {
+            Button btn = (Button)v;
+            ((ComparisonArray)ViewComparison.this.getApplication()).getComparisonArray().remove(btn.getId());
+          }
+        });
+        table_row.addView(btn, btn_params);
+
         table.addView(table_row);
+
       }
     }
   }
