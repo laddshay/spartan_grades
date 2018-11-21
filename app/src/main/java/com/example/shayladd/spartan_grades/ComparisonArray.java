@@ -12,6 +12,10 @@ public class ComparisonArray extends Application {
     return comparison_array;
   }
 
+  public void removeEntry(int index){
+    comparison_array.remove(index);
+  }
+
   public void insertComparisonArray(String[] temp_array){
     boolean flag = true;
     for (String[] ary : comparison_array){

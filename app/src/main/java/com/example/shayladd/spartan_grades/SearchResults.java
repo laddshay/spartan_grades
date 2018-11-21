@@ -52,8 +52,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
     //decide which search method to call and store results in results ArrayList
     if (search_by.equals("Course Code")) {
-      String[] codes = search_term.split(" ");
-      results = searchCode(codes[0], codes[1], master);
+      results = searchCode(search_term, master);
     } else if (search_by.equals("Course Title")) {
       results = searchTitle(search_term, master);
     } else if (search_by.equals("Professor")) {
@@ -67,22 +66,10 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     }
 
     global_results = results;
-    //display data in TableLayout
-/*
-    String to_print = "";
-    //add header row
-    //add actual data
-    for (String[] row : results) {
-      for (String col : row) {
-        to_print += col + " / ";
-      }
-      to_print += '\n';
-    }
-    output.setText(to_print);
-    */
+
     if (results.size() < 1) {
       TextView output = new TextView(this);
-      output.setText("No matching classes found.");
+      output.setText("No matching classes found. Try revising your search term and re-searching.");
       TableRow table_row = new TableRow(this);
       TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
       table.addView(output, output_params);
@@ -199,12 +186,25 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     }
   }
 
-  private static ArrayList<String[]> searchCode(String subject, String number, ArrayList<String[]> master) {
+  private static ArrayList<String[]> searchCode(String search_term, ArrayList<String[]> master) {
     ArrayList<String[]> result = new ArrayList<String[]>();
+    String subject = "";
+    String number = "";
+    boolean number_flag = false;
+    for (int i = 0; i < search_term.length(); i++) {
+      char c = search_term.charAt(i);
+      if (Character.isLetter(c) && !number_flag) {
+        //add to subject code
+        subject += c;
+      } else if (Character.isDigit(c) || number_flag) {
+        //add to course number
+        number += c;
+        number_flag = true;
+      }
+    }
     subject = subject.toUpperCase();
-    number = number.toUpperCase();
-    subject = subject.trim();
-    number = number.trim();
+    number = number.toUpperCase(); //in the case that the number contains an "H" honors denotation
+    //
     for (String[] ele : master) {
       if (subject.equals(ele[1]) && number.equals(ele[2])) {
         result.add(ele);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ViewComparison extends AppCompatActivity {
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_view_comparison);
     setTitle("Spartan Grades");
@@ -37,90 +37,101 @@ public class ViewComparison extends AppCompatActivity {
       TextView semester_header = new TextView(this);
       semester_header.setText(temp_header[0]);
       semester_header.setWidth(0);
-      TableRow.LayoutParams semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.05);
+      final TableRow.LayoutParams semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.05);
       semester_params.rightMargin = 10;
       table_row_header.addView(semester_header, semester_params);
 
       TextView subject_code_header = new TextView(this);
       subject_code_header.setText(temp_header[2]);
       subject_code_header.setWidth(0);
-      TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.1);
+      final TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.1);
       subject_code_params.rightMargin = 10;
       table_row_header.addView(subject_code_header, subject_code_params);
 
       TextView course_title_header = new TextView(this);
       course_title_header.setText(temp_header[3]);
-      TableRow.LayoutParams course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.3);
+      final TableRow.LayoutParams course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.3);
       course_title_params.rightMargin = 10;
       table_row_header.addView(course_title_header, course_title_params);
 
       TextView professor_header = new TextView(this);
       professor_header.setText(temp_header[4]);
-      TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.3);
+      final TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.3);
       professor_params.rightMargin = 10;
       table_row_header.addView(professor_header, professor_params);
 
       TextView avg_gpa_header = new TextView(this);
       avg_gpa_header.setText(temp_header[5]);
-      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.15);
+      final TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.15);
       table_row_header.addView(avg_gpa_header, avg_gpa_params);
 
       TextView btn_header = new TextView(this);
       btn_header.setText("Remove");
-      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.1);
+      final TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float) 0.1);
       table_row_header.addView(btn_header, btn_params);
 
-      table.addView(table_row_header);
+      //table.addView(table_row_header);
       //add class entries
-      for (int i = 1; i < comparison_table.size(); i++) {
-        String[] temp = comparison_table.get(i);
 
-        TableRow table_row = new TableRow(this);
+      addClassEntries(comparison_table, table_row_header, semester_params, subject_code_params, course_title_params, professor_params, avg_gpa_params, btn_params);
+    }
+  }
 
-        TextView semester = new TextView(this);
-        semester.setText(temp[0]);
-        semester.setWidth(0);
-        //TableRow.LayoutParams semester_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-        semester_params.rightMargin = 10;
-        table_row.addView(semester, semester_params);
+  private void addClassEntries(ArrayList<String[]> comparison_table, final TableRow table_row_header, final TableRow.LayoutParams semester_params, final TableRow.LayoutParams subject_code_params, final TableRow.LayoutParams course_title_params, final TableRow.LayoutParams professor_params, final TableRow.LayoutParams avg_gpa_params, final TableRow.LayoutParams btn_params ) {
+    TableLayout table = (TableLayout) findViewById(R.id.table);
+    table.removeAllViews();
+    table.addView(table_row_header);
 
-        TextView subject_code = new TextView(this);
-        subject_code.setText(temp[1] + " " + temp[2] + " ");
-        subject_code.setWidth(0);
-        //TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-        subject_code_params.rightMargin = 10;
-        table_row.addView(subject_code, subject_code_params);
+    for (int i = 1; i < comparison_table.size(); i++) {
+      String[] temp = comparison_table.get(i);
 
-        TextView course_title = new TextView(this);
-        course_title.setText(temp[3]);
-        //TableRow.LayoutParams course_title_params = new TableRow.LayoutParams((int) ((3 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-        course_title_params.rightMargin = 10;
-        table_row.addView(course_title, course_title_params);
+      TableRow table_row = new TableRow(this);
 
-        TextView professor = new TextView(this);
-        professor.setText(temp[4]);
-        //TableRow.LayoutParams professor_params = new TableRow.LayoutParams((int) ((2 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-        professor_params.rightMargin = 10;
-        table_row.addView(professor, professor_params);
+      TextView semester = new TextView(this);
+      semester.setText(temp[0]);
+      semester.setWidth(0);
+      //TableRow.LayoutParams semester_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      semester_params.rightMargin = 10;
+      table_row.addView(semester, semester_params);
 
-        TextView avg_gpa = new TextView(this);
-        avg_gpa.setText(temp[5]);
-        //TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-        table_row.addView(avg_gpa, avg_gpa_params);
+      TextView subject_code = new TextView(this);
+      subject_code.setText(temp[1] + " " + temp[2] + " ");
+      subject_code.setWidth(0);
+      //TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams((int) ((1 / 20) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      subject_code_params.rightMargin = 10;
+      table_row.addView(subject_code, subject_code_params);
 
-        Button btn = new Button(this);
-        btn.setId(i);
-        btn.setOnClickListener(new Button.OnClickListener(){
-          public void onClick(View v) {
-            Button btn = (Button)v;
-            ((ComparisonArray)ViewComparison.this.getApplication()).getComparisonArray().remove(btn.getId());
-          }
-        });
-        table_row.addView(btn, btn_params);
+      TextView course_title = new TextView(this);
+      course_title.setText(temp[3]);
+      //TableRow.LayoutParams course_title_params = new TableRow.LayoutParams((int) ((3 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      course_title_params.rightMargin = 10;
+      table_row.addView(course_title, course_title_params);
 
-        table.addView(table_row);
+      TextView professor = new TextView(this);
+      professor.setText(temp[4]);
+      //TableRow.LayoutParams professor_params = new TableRow.LayoutParams((int) ((2 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      professor_params.rightMargin = 10;
+      table_row.addView(professor, professor_params);
 
-      }
+      TextView avg_gpa = new TextView(this);
+      avg_gpa.setText(temp[5]);
+      //TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      table_row.addView(avg_gpa, avg_gpa_params);
+
+      Button btn = new Button(this);
+      btn.setId(i);
+      btn.setOnClickListener(new Button.OnClickListener(){
+        public void onClick(View v) {
+          Button btn = (Button)v;
+          ((ComparisonArray)ViewComparison.this.getApplication()).removeEntry(btn.getId());
+          ArrayList<String[]> new_comparison_table = ((ComparisonArray)ViewComparison.this.getApplication()).getComparisonArray();
+          addClassEntries(new_comparison_table, table_row_header, semester_params, subject_code_params, course_title_params, professor_params, avg_gpa_params, btn_params);
+        }
+      });
+      table_row.addView(btn, btn_params);
+
+      table.addView(table_row);
+
     }
   }
 }
