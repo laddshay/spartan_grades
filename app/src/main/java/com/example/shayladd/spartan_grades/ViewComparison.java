@@ -20,18 +20,67 @@ public class ViewComparison extends AppCompatActivity {
     setTitle("Spartan Grades");
 
     ArrayList<String[]> comparison_table = ((ComparisonArray)ViewComparison.this.getApplication()).getComparisonArray();
+
     TableLayout table = (TableLayout) findViewById(R.id.table);
+    TableLayout header = (TableLayout) findViewById(R.id.header);
 
     if (comparison_table.size() < 1) {
       TextView output = new TextView(this);
       output.setText("No matching classes found.");
       TableRow table_row = new TableRow(this);
       TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-      table.addView(output, output_params);
+      header.addView(output, output_params);
     } else {
       //add header entries
       String[] temp_header = comparison_table.get(0);
 
+      TableRow table_row_header = new TableRow(this);
+
+      VerticalTextView semester_header = new VerticalTextView(this);
+      semester_header.setText(temp_header[0]);
+      TableRow.LayoutParams semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.05);
+      semester_params.rightMargin = 10;
+      table_row_header.addView(semester_header, semester_params);
+
+      VerticalTextView subject_code_header = new VerticalTextView(this);
+      subject_code_header.setText(temp_header[2]);
+      TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      subject_code_params.rightMargin = 10;
+      table_row_header.addView(subject_code_header, subject_code_params);
+
+      VerticalTextView course_title_header = new VerticalTextView(this);
+      course_title_header.setText(temp_header[3]);
+      TableRow.LayoutParams course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
+      course_title_params.rightMargin = 10;
+      table_row_header.addView(course_title_header, course_title_params);
+
+      VerticalTextView professor_header = new VerticalTextView(this);
+      professor_header.setText(temp_header[4]);
+      TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.35);
+      professor_params.rightMargin = 200;
+      table_row_header.addView(professor_header, professor_params);
+
+      VerticalTextView avg_gpa_header = new VerticalTextView(this);
+      avg_gpa_header.setText(temp_header[5]);
+      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      table_row_header.addView(avg_gpa_header, avg_gpa_params);
+
+      VerticalTextView btn_header = new VerticalTextView(this);
+      btn_header.setText("Delete");
+      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
+      table_row_header.addView(btn_header, btn_params);
+
+      header.addView(table_row_header);
+
+      //adjust params before adding class entries
+
+      semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.05);
+      subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
+      professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
+      avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.15);
+      btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      /*
       TableRow table_row_header = new TableRow(this);
 
       TextView semester_header = new TextView(this);
@@ -72,6 +121,7 @@ public class ViewComparison extends AppCompatActivity {
 
       //table.addView(table_row_header);
       //add class entries
+      */
 
       addClassEntries(comparison_table, table_row_header, semester_params, subject_code_params, course_title_params, professor_params, avg_gpa_params, btn_params);
     }
@@ -80,7 +130,6 @@ public class ViewComparison extends AppCompatActivity {
   private void addClassEntries(ArrayList<String[]> comparison_table, final TableRow table_row_header, final TableRow.LayoutParams semester_params, final TableRow.LayoutParams subject_code_params, final TableRow.LayoutParams course_title_params, final TableRow.LayoutParams professor_params, final TableRow.LayoutParams avg_gpa_params, final TableRow.LayoutParams btn_params ) {
     TableLayout table = (TableLayout) findViewById(R.id.table);
     table.removeAllViews();
-    table.addView(table_row_header);
 
     for (int i = 1; i < comparison_table.size(); i++) {
       String[] temp = comparison_table.get(i);

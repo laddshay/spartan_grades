@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.MonthDisplayHelper;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -38,6 +40,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     ArrayList<String[]> results = new ArrayList<String[]>();
     //TextView output = (TextView) findViewById(R.id.output);
     TableLayout table = (TableLayout) findViewById(R.id.table);
+    TableLayout header = (TableLayout) findViewById(R.id.header);
 
     //get search type and search term from search page call
     Intent intent = getIntent();
@@ -71,8 +74,8 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
       TextView output = new TextView(this);
       output.setText("No matching classes found. Try revising your search term and re-searching.");
       TableRow table_row = new TableRow(this);
-      TableRow.LayoutParams output_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
-      table.addView(output, output_params);
+      TableRow.LayoutParams output_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, 1);
+      header.addView(output, output_params);
     } else {
       //add header entries
       String[] temp_header = master.get(0);
@@ -80,43 +83,51 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
       TableRow table_row_header = new TableRow(this);
 
-      TextView semester_header = new TextView(this);
+      VerticalTextView semester_header = new VerticalTextView(this);
       semester_header.setText(temp_header[0]);
-      semester_header.setWidth(0);
       TableRow.LayoutParams semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.05);
       semester_params.rightMargin = 10;
       table_row_header.addView(semester_header, semester_params);
 
-      TextView subject_code_header = new TextView(this);
+      VerticalTextView subject_code_header = new VerticalTextView(this);
       subject_code_header.setText(temp_header[2]);
-      subject_code_header.setWidth(0);
       TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
       subject_code_params.rightMargin = 10;
       table_row_header.addView(subject_code_header, subject_code_params);
 
-      TextView course_title_header = new TextView(this);
+      VerticalTextView course_title_header = new VerticalTextView(this);
       course_title_header.setText(temp_header[3]);
-      TableRow.LayoutParams course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
+      TableRow.LayoutParams course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
       course_title_params.rightMargin = 10;
       table_row_header.addView(course_title_header, course_title_params);
 
-      TextView professor_header = new TextView(this);
+      VerticalTextView professor_header = new VerticalTextView(this);
       professor_header.setText(temp_header[4]);
-      TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
-      professor_params.rightMargin = 10;
+      TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.35);
+      professor_params.rightMargin = 200;
       table_row_header.addView(professor_header, professor_params);
 
-      TextView avg_gpa_header = new TextView(this);
+      VerticalTextView avg_gpa_header = new VerticalTextView(this);
       avg_gpa_header.setText(temp_header[5]);
-      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.15);
+      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
       table_row_header.addView(avg_gpa_header, avg_gpa_params);
 
-      TextView btn_header = new TextView(this);
+      VerticalTextView btn_header = new VerticalTextView(this);
       btn_header.setText("More Info...");
-      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
       table_row_header.addView(btn_header, btn_params);
 
-      table.addView(table_row_header);
+      header.addView(table_row_header);
+
+      //adjust params before adding class entries
+
+      semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.05);
+      subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
+      professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
+      avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.15);
+      btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+
       //add class entries
       for (int i = 0; i < results.size(); i++) {
         String[] temp = results.get(i);
