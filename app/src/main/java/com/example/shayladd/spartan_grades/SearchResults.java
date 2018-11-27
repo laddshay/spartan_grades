@@ -2,6 +2,8 @@ package com.example.shayladd.spartan_grades;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -85,35 +87,47 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
       VerticalTextView semester_header = new VerticalTextView(this);
       semester_header.setText(temp_header[0]);
+      semester_header.setTypeface(null, Typeface.BOLD);
+      semester_header.setTextColor(Color.BLACK);
       TableRow.LayoutParams semester_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.05);
       semester_params.rightMargin = 10;
       table_row_header.addView(semester_header, semester_params);
 
       VerticalTextView subject_code_header = new VerticalTextView(this);
       subject_code_header.setText(temp_header[2]);
+      subject_code_header.setTypeface(null, Typeface.BOLD);
+      subject_code_header.setTextColor(Color.BLACK);
       TableRow.LayoutParams subject_code_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
       subject_code_params.rightMargin = 10;
       table_row_header.addView(subject_code_header, subject_code_params);
 
       VerticalTextView course_title_header = new VerticalTextView(this);
       course_title_header.setText(temp_header[3]);
+      course_title_header.setTypeface(null, Typeface.BOLD);
+      course_title_header.setTextColor(Color.BLACK);
       TableRow.LayoutParams course_title_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
       course_title_params.rightMargin = 10;
       table_row_header.addView(course_title_header, course_title_params);
 
       VerticalTextView professor_header = new VerticalTextView(this);
       professor_header.setText(temp_header[4]);
+      professor_header.setTypeface(null, Typeface.BOLD);
+      professor_header.setTextColor(Color.BLACK);
       TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.35);
       professor_params.rightMargin = 200;
       table_row_header.addView(professor_header, professor_params);
 
       VerticalTextView avg_gpa_header = new VerticalTextView(this);
       avg_gpa_header.setText(temp_header[5]);
+      avg_gpa_header.setTypeface(null, Typeface.BOLD);
+      avg_gpa_header.setTextColor(Color.BLACK);
       TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
       table_row_header.addView(avg_gpa_header, avg_gpa_params);
 
       VerticalTextView btn_header = new VerticalTextView(this);
       btn_header.setText("More Info...");
+      btn_header.setTypeface(null, Typeface.BOLD);
+      btn_header.setTextColor(Color.BLACK);
       TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
       table_row_header.addView(btn_header, btn_params);
 
