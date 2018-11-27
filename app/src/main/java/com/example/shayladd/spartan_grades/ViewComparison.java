@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.example.shayladd.spartan_grades.SearchResults.key;
+
 public class ViewComparison extends AppCompatActivity {
 
   @Override
@@ -65,9 +67,13 @@ public class ViewComparison extends AppCompatActivity {
       TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
       table_row_header.addView(avg_gpa_header, avg_gpa_params);
 
+      VerticalTextView more_info_header = new VerticalTextView(this);
+      more_info_header.setText("More Info...");
+      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      table_row_header.addView(more_info_header, btn_params);
+
       VerticalTextView btn_header = new VerticalTextView(this);
       btn_header.setText("Delete");
-      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.2);
       table_row_header.addView(btn_header, btn_params);
 
       header.addView(table_row_header);
@@ -127,7 +133,7 @@ public class ViewComparison extends AppCompatActivity {
     }
   }
 
-  private void addClassEntries(ArrayList<String[]> comparison_table, final TableRow table_row_header, final TableRow.LayoutParams semester_params, final TableRow.LayoutParams subject_code_params, final TableRow.LayoutParams course_title_params, final TableRow.LayoutParams professor_params, final TableRow.LayoutParams avg_gpa_params, final TableRow.LayoutParams btn_params ) {
+  private void addClassEntries(final ArrayList<String[]> comparison_table, final TableRow table_row_header, final TableRow.LayoutParams semester_params, final TableRow.LayoutParams subject_code_params, final TableRow.LayoutParams course_title_params, final TableRow.LayoutParams professor_params, final TableRow.LayoutParams avg_gpa_params, final TableRow.LayoutParams btn_params ) {
     TableLayout table = (TableLayout) findViewById(R.id.table);
     table.removeAllViews();
 
@@ -166,6 +172,20 @@ public class ViewComparison extends AppCompatActivity {
       avg_gpa.setText(temp[5]);
       //TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams((int) ((1 / 8.0) * table.getWidth()), TableRow.LayoutParams.WRAP_CONTENT, 1);
       table_row.addView(avg_gpa, avg_gpa_params);
+
+      Button more_info = new Button(this);
+      more_info.setId(i);
+      more_info.setOnClickListener(new Button.OnClickListener(){
+        public void onClick(View v) {
+          Button btn = (Button)v;
+          int index = btn.getId();
+          Intent intent = new Intent(ViewComparison.this, ClassInfo.class);
+          String[] class_info = comparison_table.get(index);
+          intent.putExtra(key, class_info);
+          startActivity(intent);
+        }
+      });
+      table_row.addView(more_info, btn_params);
 
       Button btn = new Button(this);
       btn.setId(i);
