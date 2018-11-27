@@ -58,18 +58,18 @@ public class ViewComparison extends AppCompatActivity {
 
       VerticalTextView professor_header = new VerticalTextView(this);
       professor_header.setText(temp_header[4]);
-      TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.35);
+      TableRow.LayoutParams professor_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.3);
       professor_params.rightMargin = 200;
       table_row_header.addView(professor_header, professor_params);
 
       VerticalTextView avg_gpa_header = new VerticalTextView(this);
       avg_gpa_header.setText(temp_header[5]);
-      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      TableRow.LayoutParams avg_gpa_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.05);
       table_row_header.addView(avg_gpa_header, avg_gpa_params);
 
       VerticalTextView more_info_header = new VerticalTextView(this);
       more_info_header.setText("More Info...");
-      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.1);
+      TableRow.LayoutParams btn_params = new TableRow.LayoutParams(table.getWidth(), TableRow.LayoutParams.WRAP_CONTENT, (float)0.15);
       table_row_header.addView(more_info_header, btn_params);
 
       VerticalTextView btn_header = new VerticalTextView(this);
